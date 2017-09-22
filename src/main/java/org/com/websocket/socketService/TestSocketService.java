@@ -3,6 +3,8 @@ package org.com.websocket.socketService;
 import org.apache.log4j.Logger;
 import org.com.websocket.entity.Message;
 import org.com.websocket.entity.User;
+import org.com.websocket.proxy.LogAsect;
+import org.smart4j.annotation.Aspect;
 import org.smart4j.annotation.Service;
 import org.smart4j.util.JsonUtil;
 
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * Created by dkw on 2017/9/18.
  */
+
 @Service
 @ServerEndpoint("/socket/{id}/{name}")
 public class TestSocketService {

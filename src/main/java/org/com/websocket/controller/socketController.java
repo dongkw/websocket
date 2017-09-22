@@ -1,6 +1,8 @@
 package org.com.websocket.controller;
 
+import net.sf.cglib.proxy.Enhancer;
 import org.com.websocket.entity.User;
+import org.com.websocket.proxy.LogProxy;
 import org.com.websocket.socketService.TestSocketService;
 import org.smart4j.annotation.Action;
 import org.smart4j.annotation.Controller;
@@ -30,7 +32,13 @@ public class socketController {
     }
     @Action("get:/login")
     public View login(){
-        List<User> list= testSocketService.getConnections();
+        LogProxy logProxy=new LogProxy();
+        Enhancer enhancer =new Enhancer();
+        enhancer.setSuperclass(TestSocketService.class);
+        enhancer.setCallback(logProxy);
+        TestSocketService service=(TestSocketService) enhancer.create();
+
+        List<User> list= service.getConnections();
         return new View("user.jsp").addModel("title","用户").addModel("list",list);
 
     }
